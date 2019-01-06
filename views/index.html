@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>前端问答库</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <style>
+        .list-group-item {
+            border: none;
+            /* padding: 5px 15px; */
+        }
+
+        .list-group-item p {
+            margin: 0;
+        }
+
+        .smallimg {
+            float: left;
+            height: 40px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">前端问答库</h1>
+        <hr>
+        <!-- 列表渲染 -->
+        <ul class="list-group">
+            {{ each articles }}
+            <a href="javascript:;" class="list-group-item">
+                <img src="{{ $value.img }}" alt="" class="smallimg">
+                <p>
+                    <span>[{{ $value.modelname }}]</span>
+                    <span>{{ $value.title}} </span>
+                </p>
+                <p>
+                    <span>
+                        访问量:{{$value.visitNum}}
+                        star:{{$value.star}}
+                        time:{{$value.timedate}}
+                    </span>
+                </p>
+            </a>
+            {{ /each }}
+        </ul>
+        <hr>
+        <!-- 分页 -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="{{currentPage==1 ? 'disabled':''}}">
+                    <{{currentPage==1 ? 'span':'a'}} href="/pages?page={{(currentPage-1)==0 ? 1 : (currentPage-1)}}"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </{{currentPage==1 ? 'span':'a'}}>
+                </li>
+
+                <% for(var i = 0; i < totalPage; i++){ %>
+                <li class="{{currentPage==(i+1) ? 'active' :''}}">
+                    <a href="/pages?page={{(i+1)}}">{{(i+1)}}</a>
+                </li>
+                <% } %>
+
+                <li class="{{currentPage==totalPage ? 'disabled':''}}">
+                    <{{currentPage==totalPage ? 'span':'a'}} href="/pages?page={{(currentPage+1)>totalPage? totalPage:(currentPage+1)}}"
+                        aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </{{currentPage==totalPage ? 'span':'a'}}>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+</body>
+
+</html>
